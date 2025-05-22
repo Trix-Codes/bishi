@@ -118,7 +118,7 @@ You can open a flagged file through any editor of your choice or through another
 
 
 
-## Installation
+## Installation 
 Follow these steps to install Bishi on your Linux system:
 ##### 1. Use the `git clone` command to download the bishi package like this :
     git clone https://github.com/Trix-Codes/bishi
