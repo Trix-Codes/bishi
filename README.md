@@ -60,7 +60,7 @@ You can list the flagged files along with their indexes:
     ```
     1   :   file2.txt
     ```
-### 4.) Flag a File
+### 4. Flag a File
 To flag a file (or file path), you can use either of the following commands:
 
     $ bishi -f <file or file path>
@@ -68,7 +68,7 @@ or
 
     $ bishi -flag <file or file path>
 
-### 5.) Unflag Files
+### 5. Unflag Files
 Bishi allows you to unflag files through various commands:
 - Unflag all flagged files:
     ```
@@ -94,7 +94,7 @@ Bishi allows you to unflag files through various commands:
     ```
     $ bishi -unflag <file or file path>
     ```
-### 6.) Opening a file through another command
+### 6. Opening a file through another command
 You can open a flagged file through any editor of your choice or through another command too. For example:
 - Opening a file with index 1 with neovim:
     ```
@@ -116,3 +116,42 @@ You can open a flagged file through any editor of your choice or through another
 
     
 
+
+
+## Installation
+Follow these steps to install Bishi on your Linux system:
+##### 1. Use the `git clone` command to download the bishi package like this :
+    git clone https://github.com/Trix-Codes/bishi.git
+
+##### 2. Run the following commands step by step :
+- Creating a Path to move the Packages to:
+    ```
+    sudo mkdir /bishicom
+    ```
+- Making the path executable:
+    ```
+    echo 'export PATH="/bishicom:$PATH"' >> ~/.bashrc
+    ```
+    or, if you use zsh:
+    ```
+    echo 'export PATH="/bishicom:$PATH"' >> ~/.zshrc
+    ```
+- Now add the `.bashrc` or `.zshrc` file to the source:
+    ```
+    source ~/.bashrc
+    ```
+    or, if you use zsh:
+    ```
+    source ~/.zshrc
+    ```
+- Now make bishi an executable:
+    ```
+    chmod +x bishi
+    ```
+- Now move the packages to the executable path
+    ```
+    cd bishi/
+
+    sudo mv * /bishicom
+    ```
+- All done! You can now use bishi!
