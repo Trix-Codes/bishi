@@ -1,2 +1,118 @@
-# bishi
-Bishi is a unix-specific terminal command. It can be used to mark certain files and quickly access one of them or all of them at once.
+# Bishi Command
+
+Bishi is a lightweight Linux command-line utility that lets you quickly "flag" files for later reference. With Bishi, you can mark important files and easily access them whenever you need to, making it an ideal tool for managing frequently used files.
+## Overview
+
+Bishi works by marking (or "flagging") files specified by the user, allowing fast access later. Once a file is flagged, you can retrieve or unflag it using simple commands. This tool is perfect for developers, system administrators, or anyone who wants a quick shortcut to frequently used files.
+
+## Usage
+
+Below are the available commands and flags for Bishi:
+
+### 1. Open Most-Recently Flagged File
+
+Simply run the command without any flags to open the file that was most recently flagged:
+
+```
+$ bishi
+```
+### 2. Open A Flagged File By Index
+
+You can open a specific flagged file by referencing its index:
+- Using the `-t` flag:
+    ```
+    $ bishi -t <Index>
+    ```
+- Alternatively, using the `-target` flag:
+    ```
+    $ bishi -target <Index>
+    ```
+Example: If you have two flagged files: `file1.txt` (index 0) and `file2.txt` (index 1), then running:
+
+    $ bishi -t 1
+opens `file2.txt`
+
+### 3. List Flagged Files
+
+You can list the flagged files along with their indexes:
+- To list all flagged files, use:
+    ```
+    $ bishi -ls all
+    ```
+    or simply
+    ```
+    $ bishi -ls a
+    ```
+    Example Output:
+    ```
+    0   :   file1.txt
+    1   :   file2.txt
+    ```
+- To list the last flagged file, use:
+    ```
+    $ bishi -ls last
+    ```
+    or simply
+    ```
+    $ bishi -ls l
+    ```
+    Example Output:
+    ```
+    1   :   file2.txt
+    ```
+### 4.) Flag a File
+To flag a file (or file path), you can use either of the following commands:
+
+    $ bishi -f <file or file path>
+or
+
+    $ bishi -flag <file or file path>
+
+### 5.) Unflag Files
+Bishi allows you to unflag files through various commands:
+- Unflag all flagged files:
+    ```
+    $ bishi -uf all
+    ```
+    or
+    ```
+    $ bishi -unflag all
+    ```
+- Unflag a file by its index:
+    ```
+    $ bishi -uf <Index>
+    ```
+    or
+    ```
+    $ bishi -unflag <Index>
+    ```
+- Unflag a file by specifying its file name or path:
+    ```
+    $ bishi -uf <file or file path>
+    ```
+    or
+    ```
+    $ bishi -unflag <file or file path>
+    ```
+### 6.) Opening a file through another command
+You can open a flagged file through any editor of your choice or through another command too. For example:
+- Opening a file with index 1 with neovim:
+    ```
+    $ bishi -o nvim#1
+    ```
+    or
+    ```
+    $ bishi -open nvim#1
+    ```
+- Running a file with index 1 in python:
+    ```
+    $ bishi -o python3#1
+    ```
+    or
+    ```
+    $ bishi -open python3#1
+    ```
+
+
+    
+
