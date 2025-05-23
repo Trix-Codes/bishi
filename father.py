@@ -42,7 +42,7 @@ def tflag(arg):
     #fpath = os.path.expanduser(arg)
     filet = readj()
     fpath = str(filet[arg])
-    command = "xdg-open " + str(fpath)
+    command = str(op) + str(fpath)
     os.system(command)
 
 def flagger(arg):
@@ -55,7 +55,7 @@ def flagger(arg):
 
 def default():
     filet = readj()
-    command = "xdg-open " + str(filet[-1])
+    command = str(op) + str(filet[-1])
     os.system(command)
 
 def listerall():
@@ -106,6 +106,34 @@ def pipeopen(arg):
         command = str(editor) + " '" + str(filet[int(com)]) + "'"
         os.system(command)
 
+def defaultopen():
+    file = open(r"/bishicom/bishit.json" , "r")
+    filet = json.load(file)
+    com = str(filet["opener"]).strip() + " "
+    return com
+
+def customdefault(arg):
+    file = open(r"/bishicom/bishit.json" , "r")
+    filet = json.load(file)
+    file.close()
+    file = open(r"/bishicom/bishit.json" , "w")
+    com = str(arg).strip() + " "
+    filet["opener"] = com
+    json.dump(filet , file , indent = 1)
+    file.close()
+    print("Default opener changed to:" , com)
+
+def restore():
+    file = open(r"/bishicom/bishit.json" , "r")
+    filet = json.load(file)
+    file.close()
+    file = open(r"/bishicom/bishit.json" , "w")
+    filet["opener"] = "xdg-open "
+    json.dump(filet , file , indent = 1)
+    file.close()
+    print("Default settings restored!")
+
+
 def test(arg):
     filet = readj()
     newfilet = []
@@ -133,6 +161,7 @@ def test(arg):
 
 
 filet = readj()
+op = defaultopen()
 
 parser = arr.ArgumentParser()
 parser.add_argument("-target" , "-t" , type = int , help = "Opens the file corresponding to the index number mentioned.")
@@ -141,6 +170,9 @@ parser.add_argument("-flag" , "-f" , type = str , help = "Flags a specified file
 parser.add_argument("-unflag" , "-uf" , type = str , help = "Unflags the specified file or all files")
 parser.add_argument("-open" , "-o" , type = str , help = "Opens the file with the selected app or editor")
 parser.add_argument("-test" , type = str , help = "For my development purposes")
+parser.add_argument("-default" , "-do" , type = str , help = "Sets the default app, program or command to open directories.")
+parser.add_argument('-restore' , type = str , choices = ["True" , "False"] , help = "Restores default settings")
+
 args = parser.parse_args()
 
 if args.target is not None:
@@ -157,6 +189,12 @@ elif args.open is not None:
     pipeopen(args.open)
 elif args.test is not None:
     test(args.test)
+elif args.default is not None:
+    customdefault(args.default)
+elif args.restore is not None:
+    if args.restore == "True":
+        restore()
+    elif args.restore == "False":
+        print("Why did you bother typing this command then?")
 else:
     default()
-
