@@ -1,5 +1,6 @@
 import os
 import argparse as arr
+import json
 
 def readf():
     file = open(r"/bishicom/bishit.txt" , "r")
@@ -9,48 +10,66 @@ def readf():
     probit = eval(probit)
     return probit
 
-def openf(arg):
-    filet = readf()
-    file = open(r"/bishicom/bishit.txt" , "w")
-    filet.append(str(arg))
-    file.write(filet)
+def readj():
+    file = open(r"/bishicom/bishit.json" , "r")
+    newl = json.load(file)
+    filet = newl["flagged_files"]
+    return filet
+
+def writej(data):
+    file = open(r"/bishicom/bishit.json" , "r+")
+    filet = json.load(file)
+    filet["flagged_files"].append(data)
+    file.seek(0)
+    json.dump(filet , file , indent = 1)
+
+def writejuf(data):
+    file = open(r"/bishicom/bishit.json" , "r")
+    filet = json.load(file)
     file.close()
+    filet["flagged_files"] = data
+    file = open(r"/bishicom/bishit.json" , "w")
+    file.seek(0)
+    json.dump(filet , file , indent = 1)
+    file.close()
+
+def openf(arg):
+    filet = readj()
+    filet.append(str(arg))
+    writej(filet)
 
 def tflag(arg):
     #fpath = os.path.expanduser(arg)
-    filet = readf()
+    filet = readj()
     fpath = str(filet[arg])
     command = "xdg-open " + str(fpath)
     os.system(command)
 
 def flagger(arg):
     fpath = os.path.abspath(arg)
-    filet = readf()
+    filet = readj()
     filet.append(str(fpath))
-    file = open("/bishicom/bishit.txt" , "w")
-    file.write(str(filet))
-    file.close()
+    writej(str(fpath))
     print(str(arg) + " is flagged!")
     print()
 
 def default():
-    filet = readf()
+    filet = readj()
     command = "xdg-open " + str(filet[-1])
     os.system(command)
 
 def listerall():
-    filet = readf()
+    filet = readj()
     for i in range(len(filet)):
         print(str(i) + "    :   " + str(filet[i]))
 
 def listerlast():
-    filet = readf()
+    filet = readj()
     print(str(len(filet)-1) + "    :    " + filet[-1])
 
 def unflagger(arg):
-    filet = readf()
+    filet = readj()
     newfilet = []
-    file = open("/bishicom/bishit.txt" , "w")
     if arg.isdigit() == True:
         index = int(arg)
         for i in range(len(filet)):
@@ -71,12 +90,11 @@ def unflagger(arg):
             else:
                 newfilet.append(i)
         print(str(fpath) + " is unflagged!")
-    file.write(str(newfilet))
-    file.close()
+    writejuf(newfilet)
 
 def pipeopen(arg):
     #bishi -open nvim#all/0,1,2,3
-    filet = readf()
+    filet = readj()
     words = arg.split("#")
     editor = words[0]
     com = words[1]
@@ -89,15 +107,32 @@ def pipeopen(arg):
         os.system(command)
 
 def test(arg):
-    filet = readf()
-    words = arg.split("#")
-    editor = words[0]
-    com = words[1]
-    command = str(editor) + " '" + str(filet[int(com)]) + "'"
-    print(command)
+    filet = readj()
+    newfilet = []
+    if arg.isdigit() == True:
+        index = int(arg)
+        for i in range(len(filet)):
+            if i == index:
+                continue
+            else:
+                newfilet.append(filet[i])
+        print(str(filet[index]) + " is unflagged!")
+    elif arg == "all":
+        newfilet = []
+        print("All files are unflagged")
+    else:
+        fpath = os.path.abspath(arg)
+        fpath = str(fpath)
+        for i in filet:
+            if i == fpath:
+                continue
+            else:
+                newfilet.append(i)
+        print(str(fpath) + " is unflagged!")
+    print(newfilet)
 
 
-filet = readf()
+filet = readj()
 
 parser = arr.ArgumentParser()
 parser.add_argument("-target" , "-t" , type = int , help = "Opens the file corresponding to the index number mentioned.")
