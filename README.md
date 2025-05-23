@@ -152,6 +152,6 @@ Follow these steps to install Bishi on your Linux system:
     ```
 - Now move the packages to the executable path
     ```
-    sudo mv bishi bishit.txt father.py /bishicom
+    sudo mv bishi bishit.json father.py /bishicom
     ```
 - All done! You can now use bishi!
