@@ -112,7 +112,35 @@ You can open a flagged file through any editor of your choice or through another
     ```
     $ bishi -open python3#1
     ```
-
+### 7. Setting Bishi to open flagged files with other editors/programs/commands by default
+By default, bishi opens flagged files with the `xdg-open` command. However, you can set it to open flagged files using a different program/editor/command.
+- Syntax:
+    ```
+    bishi -default <opener>
+    ```
+    or
+    ```
+    bishi -do <opener>
+    ```
+  - For example, to make bishi open flagged files in VS Code by default, run:
+    ```
+    bishi -default code
+    ```
+    or
+    ```
+    bishi -do code
+    ```
+### 8. Restore `bishi` to default settings
+If you want to restore the default settings to the `bishi` command, you can.
+- To restore default settings:
+    ```
+    bishi -restore True
+    ```
+- To not restore that (It's weird that you want to run this command but okay):
+    ```
+    bishi -restore False
+    ```
+    (This literally doesn't change anything)
 
     
 
